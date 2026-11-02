@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>相位 · 振动 波动 波动光学</title>
+    <meta name="description" content="大学物理：机械振动、机械波动、波动光学 —— 交互式课程地图与物理实验室" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0c0f'/%3E%3Ctext x='32' y='45' font-size='38' text-anchor='middle' fill='%233fd0c9' font-family='serif'%3E%CF%86%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script>if (!/[?&]static\b/.test(location.search)) document.documentElement.classList.add("js");</script>
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <nav class="topbar" aria-label="页面导航">
+      <a class="brand" href="#top"><span class="brand-mark">φ</span><span class="brand-name">相位</span><em>Phase</em></a>
+      <div class="nav-links">
+        <a href="#thread">主线</a>
+        <a href="#map">地图</a>
+        <a href="#route">路线</a>
+        <a href="#lab">实验室</a>
+        <a href="#tree">知识树</a>
+        <a href="#pitfalls">考点</a>
+        <a href="#time">时间</a>
+      </div>
+      <a class="nav-progress" href="#route" id="navProgress" aria-label="学习进度"></a>
+    </nav>
+
+    <header class="hero" id="top">
+      <canvas id="rippleCanvas" aria-hidden="true"></canvas>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <p class="eyebrow">University Physics · Self-study Course</p>
+        <h1><span>振动</span><i>·</i><span>波动</span><i>·</i><span class="h1-optics">波动光学</span></h1>
+        <p class="hero-lede">三章用同一种语言写成：<b>相位</b>。从一个点的振动，到一串点的波，再到两束光的干涉。</p>
+        <div class="hero-stats" id="heroStats"></div>
+        <div class="hero-cta">
+          <a class="btn primary" href="#map">打开知识地图</a>
+          <a class="btn ghost" href="#lab">进入实验室</a>
+        </div>
+      </div>
+      <p class="hero-caption" id="heroCaption">背景是两个同相点波源的实时干涉，按住拖动可移动第二个波源。暗线附近 |r₂ − r₁| ≈ (k + ½)λ。</p>
+    </header>
+
+    <main>
+      <section class="section" id="thread">
+        <div class="section-head reveal">
+          <span class="section-no">01</span>
+          <div>
+            <h2>一条主线：相位</h2>
+            <p>每一步都只是在问：相位怎么变、相位差是多少。</p>
+          </div>
+        </div>
+        <div class="phase-band" id="phaseBand"></div>
+      </section>
+
+      <section class="section" id="map">
+        <div class="section-head reveal">
+          <span class="section-no">02</span>
+          <div>
+            <h2>知识地图</h2>
+            <p>点击任意一课：亮起的是学它之前必须先懂的，虚线是它会解锁的。</p>
+          </div>
+        </div>
+        <div class="map-wrap reveal">
+          <div class="map-legend" id="mapLegend"></div>
+          <div class="map-scroll"><svg id="mapSvg" role="img" aria-label="23 个课时之间的先修依赖关系图"></svg></div>
+          <aside class="map-detail" id="mapDetail" aria-live="polite"></aside>
+        </div>
+      </section>
+
+      <section class="section" id="route">
+        <div class="section-head reveal">
+          <span class="section-no">03</span>
+          <div>
+            <h2>课时路线</h2>
+            <p>23 课时 + 3 次章节训练 + 1 次综合。勾选「已学完」会保存在本机浏览器里。</p>
+          </div>
+        </div>
+        <div class="route-bar reveal">
+          <div class="chip-row" id="routeFilters" role="group" aria-label="筛选课时"></div>
+          <div class="route-progress" id="routeProgress"></div>
+        </div>
+        <div id="routeGroups"></div>
+      </section>
+
+      <section class="section" id="lab">
+        <div class="section-head reveal">
+          <span class="section-no">04</span>
+          <div>
+            <h2>交互实验室</h2>
+            <p>七个可调参数的实验，全部按教材公式实时计算。先预测，再拖动验证。</p>
+          </div>
+        </div>
+        <div class="lab reveal">
+          <div class="lab-tabs" id="labTabs" role="tablist" aria-label="实验列表"></div>
+          <div class="lab-stage" id="labStage"></div>
+        </div>
+      </section>
+
+      <section class="section" id="tree">
+        <div class="section-head reveal">
+          <span class="section-no">05</span>
+          <div>
+            <h2>知识树</h2>
+            <p>一级是章，二级是模块，三级是具体知识点。选一个标签，只看这一类。</p>
+          </div>
+        </div>
+        <div class="chip-row reveal" id="treeFilters" role="group" aria-label="按标签筛选"></div>
+        <div class="tree-grid" id="treeGrid"></div>
+      </section>
+
+      <section class="section" id="pitfalls">
+        <div class="section-head reveal">
+          <span class="section-no">06</span>
+          <div>
+            <h2>核心考点与易错概念</h2>
+            <p>易错卡片先看错误想法，自己说出错在哪，再点击翻面。</p>
+          </div>
+        </div>
+        <div class="pit-grid">
+          <ol class="core-list reveal" id="coreList"></ol>
+          <div>
+            <div class="flip-grid" id="flipGrid"></div>
+            <p class="extra-note reveal" id="extraNote"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="time">
+        <div class="section-head reveal">
+          <span class="section-no">07</span>
+          <div>
+            <h2>时间与节奏</h2>
+            <p>全部是估计值（⚠️待验证），学完前两课后按你的实际速度校准。</p>
+          </div>
+        </div>
+        <div class="time-grid">
+          <div class="time-bars reveal" id="timeBars"></div>
+          <div class="pace reveal" id="pace"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>
+          <p class="footer-title">数据与证据说明</p>
+          <ul id="evidenceList"></ul>
+        </div>
+        <div>
+          <div id="localFiles" hidden>
+            <p class="footer-title">配套文件（仅本机预览时显示）</p>
+            <ul>
+              <li><a href="../振动波动光学_课程大纲.md">振动波动光学_课程大纲.md</a></li>
+              <li><a href="../振动波动光学_学习进度.md">振动波动光学_学习进度.md</a></li>
+            </ul>
+          </div>
+          <p class="footer-title">说明</p>
+          <ul>
+            <li>进度只保存在当前浏览器，换设备不会同步。</li>
+            <li>实验中的曲线均按教材公式实时计算。</li>
+          </ul>
+          <p class="footer-meta" id="footerMeta"></p>
+        </div>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <noscript><div class="noscript">这个页面需要 JavaScript 才能显示课程内容。</div></noscript>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+    <script defer src="./data.js"></script>
+    <script defer src="./labs.js"></script>
+    <script defer src="./app.js"></script>
+  </body>
+</html>
